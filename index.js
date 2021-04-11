@@ -3,7 +3,7 @@ const app = express()
 const port = 8080
 const { User } = require("./models/User");
 const bodyParser = require('body-parser');
-
+const config = require('./config/key');
 //application/x-www-form-urlencoded이렇게 된 데이터를 분석해서 가지고 올수있게 해주는것
 app.use(bodyParser.urlencoded({extended: true}));//bodyParser 옵션
 
@@ -11,13 +11,13 @@ app.use(bodyParser.urlencoded({extended: true}));//bodyParser 옵션
 app.use(bodyParser.json())
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://sjy:abcd1234@attendence.p8lyz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{
+mongoose.connect(config.mongoURI,{
     useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex:true, useFindAndModify:false
 }).then(() => console.log('MongoDB Connected...'))
 .catch(err => console.log(err))
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World!!!!')
 })
 app.post('/register',(req,res) => {
     //회원가입 할때 필요한 정보들을 client에서 가져오면 
