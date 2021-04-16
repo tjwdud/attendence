@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 app.get('/api/hello', (req,res) => {
   res.send("서버에서 보낸 반응 안녕하세요")
 })
-app.post('api/users/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
   //회원가입 할때 필요한 정보들을 client에서 가져오면 
   //그것들을 데이터 베이스에 넣어준다
 
@@ -41,6 +41,7 @@ app.post('api/users/register', (req, res) => {
 app.post('/api/users/login', (req, res) => {
   //요청된 이메일이 데이터 베이스에 있는지 찾는다
   User.findOne({ email: req.body.email }, (err, user) => {
+    if (err) return res.json({loginSuccess: false, err})
     if (!user) {
       return res.json({
         loginSuccess: false,
@@ -90,7 +91,7 @@ app.get('/api/users/logout', auth, (req, res) => {
     })
 })
 
-const port = 8001
+const port = 5000
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
